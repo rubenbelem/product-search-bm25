@@ -3,12 +3,14 @@
 #include <cstring>
 #include "../deps/json/json.hpp"
 #include "Product.h"
+#include "Tokenizer.h"
 
 using namespace std;
 using nlohmann::json;
 
 int main( int argc, char *argv[] ) {
     ifstream productsFile;
+    Tokenizer tokenizer;
     if (argc < 2) {
         cout << "The 1st parameter <data_path> must be set!";
         return 1;
@@ -29,7 +31,12 @@ int main( int argc, char *argv[] ) {
         productJson.at("id").get_to(product.id);
         productJson.at("name").get_to(product.name);
 
-        cout << product.id << " | " << product.name << endl;
+        auto tokens = tokenizer.get(product.name);
+
+        for (auto token : tokens) {
+            cout << token << "-";
+        }
+        cout << endl;
     }
 
     productsFile.close();
