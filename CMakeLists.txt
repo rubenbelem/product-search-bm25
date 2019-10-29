@@ -6,4 +6,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 set(SOURCE_DIRECTORY "src")
 
-add_executable(processador ${SOURCE_DIRECTORY}/main.cpp)
+add_executable(processador ${SOURCE_DIRECTORY}/main.cpp src/Product.h)
+target_include_directories(processador PRIVATE ./deps/json)
