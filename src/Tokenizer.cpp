@@ -17,7 +17,8 @@ std::vector<std::string> Tokenizer::get(const std::string &s) {
     istringstream tokenStream(s);
 
     while (std::getline(tokenStream, token, ' ')) {
-        tokens.push_back(token);
+        if (token != "") // if token is not empty, add to the return list.
+            tokens.push_back(token);
     }
 
     return tokens;

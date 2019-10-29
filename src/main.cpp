@@ -34,7 +34,7 @@ int main( int argc, char *argv[] ) {
         auto tokens = tokenizer.get(product.name);
 
         for (auto token : tokens) {
-            cout << token << "-";
+            cout << token << "|";
         }
         cout << endl;
     }
