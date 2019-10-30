@@ -17,7 +17,8 @@ using namespace std;
 namespace {
 // The folowing three functions are from:
 // https://stackoverflow.com/questions/14094621/change-all-accented-letters-to-normal-letters-in-c
-    unsigned char simplifyDoubleChars(unsigned char c1, unsigned char c2, bool changeToLowerCase) {
+    unsigned char simplifyDoubleChars(unsigned char c1, unsigned char c2,
+                                      bool changeToLowerCase) {
         if (c1 == 0xC2) {
             if (c2 == 0xAA) { return 'a'; }
             if (c2 == 0xBA) { return ' '; }
@@ -26,15 +27,25 @@ namespace {
         }
 
         if (c1 == 0xC3) {
-            if (c2 >= 0x80 && c2 <= 0x85) { return changeToLowerCase ? 'a' : 'A'; }
+            if (c2 >= 0x80 && c2 <= 0x85) {
+                return changeToLowerCase ? 'a' : 'A';
+            }
             if (c2 >= 0xA0 && c2 <= 0xA5) { return 'a'; }
-            if (c2 >= 0x88 && c2 <= 0x8B) { return changeToLowerCase ? 'e' : 'E'; }
+            if (c2 >= 0x88 && c2 <= 0x8B) {
+                return changeToLowerCase ? 'e' : 'E';
+            }
             if (c2 >= 0xA8 && c2 <= 0xAB) { return 'e'; }
-            if (c2 >= 0x8C && c2 <= 0x8F) { return changeToLowerCase ? 'i' : 'I'; }
+            if (c2 >= 0x8C && c2 <= 0x8F) {
+                return changeToLowerCase ? 'i' : 'I';
+            }
             if (c2 >= 0xAC && c2 <= 0xAF) { return 'i'; }
-            if (c2 >= 0x92 && c2 <= 0x96) { return changeToLowerCase ? 'o' : 'O'; }
+            if (c2 >= 0x92 && c2 <= 0x96) {
+                return changeToLowerCase ? 'o' : 'O';
+            }
             if (c2 >= 0xB2 && c2 <= 0xB6) { return 'o'; }
-            if (c2 >= 0x99 && c2 <= 0x9C) { return changeToLowerCase ? 'u' : 'U'; }
+            if (c2 >= 0x99 && c2 <= 0x9C) {
+                return changeToLowerCase ? 'u' : 'U';
+            }
             if (c2 >= 0xB9 && c2 <= 0xBC) { return 'u'; }
             if (c2 == 0x87) { return changeToLowerCase ? 'c' : 'C'; }
             if (c2 == 0xA7) { return 'c'; }
@@ -115,7 +126,10 @@ namespace {
             unsigned char c = (unsigned char) s->at(i);
             if (c >= 0x80) {
                 if (i < (n - 1) && (unsigned char) s->at(i + 1) >= 0x80) {
-                    unsigned char c2 = simplifyDoubleChars(c, (unsigned char) s->at(i + 1), changeToLowerCase);
+                    unsigned char c2 = simplifyDoubleChars(c,
+                                                           (unsigned char) s->at(
+                                                                   i + 1),
+                                                           changeToLowerCase);
                     if (c2 < 0x80) {
                         s->at(pos) = c2;
                         i++;
@@ -155,7 +169,7 @@ namespace {
     }
 }
 
-bool Tokenizer::isStopWord(const string& s) {
+bool Tokenizer::isStopWord(const string &s) {
     return this->stopWordsMap.find(s) != this->stopWordsMap.end();
 }
 
@@ -182,10 +196,10 @@ std::vector<std::string> Tokenizer::extractFrom(const std::string &s) {
 
 Tokenizer::Tokenizer() = default;
 
-Tokenizer::Tokenizer(std::ifstream& stopWordsFile) {
+Tokenizer::Tokenizer(std::ifstream &stopWordsFile) {
     string line;
 
-    while(getline(stopWordsFile, line)) {
+    while (getline(stopWordsFile, line)) {
         ::simplifyString(&line, true);
         this->stopWordsMap[line] = true;
     }

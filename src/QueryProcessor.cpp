@@ -23,11 +23,12 @@ void QueryProcessor::indexProduct(Product product) {
     this->productLengthTable.add(product.indexId, tokens.size());
 }
 
-bool compareQueryResults(const QueryResult& queryResult1, const QueryResult& queryResult2) {
+bool compareQueryResults(const QueryResult &queryResult1,
+                         const QueryResult &queryResult2) {
     return queryResult1.score < queryResult2.score;
 }
 
-vector<QueryResult> QueryProcessor::process(const string& query) {
+vector<QueryResult> QueryProcessor::process(const string &query) {
     unordered_map<int, double> queryResults;
     vector<QueryResult> results;
 
@@ -37,14 +38,20 @@ vector<QueryResult> QueryProcessor::process(const string& query) {
 
     for (auto queryToken : queryTokens) {
         if (this->invertedIndex.hasWord(queryToken)) {
-            unordered_map<int, int> *invertedList = this->invertedIndex.getInvertedList(queryToken);
+            unordered_map<int, int> *invertedList = this->invertedIndex.getInvertedList(
+                    queryToken);
 
             if (invertedList != nullptr) {
                 for (auto item : *invertedList) {
                     int productIndexId = item.first;
                     int frequency = item.second;
 
-                    double score = scoring::BM25::score(invertedList->size(), frequency, 1, 0, this->productLengthTable.getTableSize(), this->productLengthTable.getLength(productIndexId), this->productLengthTable.getAverageSize());
+                    double score = scoring::BM25::score(invertedList->size(),
+                                                        frequency, 1, 0,
+                                                        this->productLengthTable.getTableSize(),
+                                                        this->productLengthTable.getLength(
+                                                                productIndexId),
+                                                        this->productLengthTable.getAverageSize());
 
                     queryResults[productIndexId] += score;
                 }
@@ -60,13 +67,16 @@ vector<QueryResult> QueryProcessor::process(const string& query) {
 
         resultHeap.emplace_back(p, score);
 
-        std::push_heap(resultHeap.begin(), resultHeap.end(), compareQueryResults);
+        std::push_heap(resultHeap.begin(), resultHeap.end(),
+                       compareQueryResults);
     }
 
     for (int i = 0; i < resultHeap.size(); ++i) {
         results.push_back(resultHeap.front());
 
-        std::pop_heap(resultHeap.begin(), resultHeap.end(), compareQueryResults);
+        std::pop_heap(resultHeap.begin(), resultHeap.end(),
+                      compareQueryResults);
+      
         resultHeap.pop_back();
         if (i == K - 1) break;
     }
@@ -74,6 +84,7 @@ vector<QueryResult> QueryProcessor::process(const string& query) {
     return results;
 }
 
-QueryProcessor::QueryProcessor(int K, Tokenizer *pTokenizer) : tokenizer(pTokenizer), K(K){
+QueryProcessor::QueryProcessor(int K, Tokenizer *pTokenizer) : tokenizer(
+        pTokenizer), K(K) {
 
 }

@@ -70,5 +70,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 .idea/
 bin/
-bin/processador
+bin/processor
 test/
+build/
