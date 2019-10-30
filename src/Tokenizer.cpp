@@ -162,7 +162,7 @@ namespace {
         string result;
         std::replace_copy_if(text.begin(), text.end(),
                              std::back_inserter(result),
-                             std::ptr_fun<int, int>(&std::ispunct), ' '
+                             [](unsigned char c){ return std::ispunct(c) || c == '\n'; }, ' '
         );
 
         return result;
