@@ -45,7 +45,7 @@ int main( int argc, char *argv[] ) {
         queryProcessor.indexProduct(product);
     }
 
-    auto HAHAHA = queryProcessor.invertedIndex.getFrequencyInIndex("esportivo");
+    auto HAHAHA = queryProcessor.productLengthTable.getAverageSize();
 
     ofstream charCounting("../test/char_counting.txt");
 

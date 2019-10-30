@@ -23,3 +23,14 @@ int ProductLengthTable::getLength(int productIndexId) {
 int ProductLengthTable::getTableSize() {
     return this->table.size();
 }
+
+double ProductLengthTable::getAverageSize() {
+    double sum = 0.0;
+
+    for (auto tableItem : this->table) {
+        double length = (double) tableItem.second;
+        sum += length;
+    }
+
+    return sum / (double) this->table.size();
+}
