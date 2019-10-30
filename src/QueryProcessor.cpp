@@ -16,6 +16,8 @@ void QueryProcessor::indexProduct(Product product) {
     for (string token : tokens) {
         this->invertedIndex.add(token, product.indexId);
     }
+
+    this->productLengthTable.add(product.indexId, tokens.size());
 }
 
 QueryProcessor::QueryProcessor(Tokenizer *pTokenizer) : tokenizer(pTokenizer) {
