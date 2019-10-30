@@ -72,3 +72,4 @@ fabric.properties
 bin/
 bin/processador
 test/
+build/
