@@ -3,23 +3,35 @@
 #include <cstring>
 #include "../deps/json/json.hpp"
 #include "Product.h"
-
+#include "Tokenizer.h"
+#include <unordered_map>
 using namespace std;
 using nlohmann::json;
 
 int main( int argc, char *argv[] ) {
     ifstream productsFile;
-    if (argc < 2) {
-        cout << "The 1st parameter <data_path> must be set!";
+    ifstream stopwordsFile;
+
+    if (argc < 3) {
+        cerr << "Usage: ./processador <products-file-path> <stopwords-file-path>";
         return 1;
     }
 
     productsFile.open(argv[1]);
 
     if (productsFile.fail()) {
-        cout << "The products file was not found.";
+        cerr << "The products file on path \"" << argv[1] << "\" was not found.";
         return 1;
     }
+
+    stopwordsFile.open(argv[2]);
+
+    if (stopwordsFile.fail()) {
+        cerr << "The stop words file on path \"" << argv[2] << "\" was not found.";
+        return 1;
+    }
+
+    Tokenizer tokenizer(stopwordsFile);
 
     string line;
 
@@ -29,8 +41,15 @@ int main( int argc, char *argv[] ) {
         productJson.at("id").get_to(product.id);
         productJson.at("name").get_to(product.name);
 
-        cout << product.id << " | " << product.name << endl;
+        auto tokens = tokenizer.extractFrom(product.name);
+
+        for (const string& token : tokens) {
+            cout << token << "|";
+        }
+        cout << endl;
     }
+
+    ofstream charCounting("../test/char_counting.txt");
 
     productsFile.close();
     return 0;
