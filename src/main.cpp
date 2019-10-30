@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <climits>
+#include <chrono>
 
 using namespace std;
 
@@ -64,7 +65,7 @@ int main(int argc, char *argv[]) {
     cout << "\nAlright! The indexing step is starting right now.\n\n";
 
     Tokenizer tokenizer(stopWordsFile);
-    QueryProcessor queryProcessor(20, &tokenizer);
+    QueryProcessor queryProcessor(20, 15, &tokenizer);
 
     // Indexing step
     try {
@@ -99,7 +100,15 @@ int main(int argc, char *argv[]) {
 
         if (query == "$exit()") break;
 
+        auto start = std::chrono::system_clock::now();
         auto queryResults = queryProcessor.process(query);
+        auto end = std::chrono::system_clock::now();
+
+        auto queryProcessingTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+        if (queryResults.empty()) {
+            continue;
+        }
 
         // The queryResults array already comes sorted from queryProcessor
         // So, if the user choose sortOption 2 there's nothing to do with the
@@ -117,7 +126,7 @@ int main(int argc, char *argv[]) {
             ++i;
         }
 
-
+        cout << "Query processed in " << queryProcessingTime << "ms.\n";
     }
 
     return 0;

@@ -11,12 +11,16 @@
 #include "ProductLengthTable.h"
 #include "Tokenizer.h"
 #include "QueryResult.h"
+#include "SpellingCorrector.h"
 
 class QueryProcessor {
 private:
     int K;
 public:
-    QueryProcessor(int _K, Tokenizer *pTokenizer);
+    std::string maxLengthToken;
+    int correctionThreshold;
+
+    QueryProcessor(int _K, int  correctionThreshold, Tokenizer *pTokenizer);
 
     void indexProduct(Product product);
 
@@ -27,6 +31,7 @@ public:
     InvertedIndex invertedIndex;
     ProductLengthTable productLengthTable;
     Tokenizer *tokenizer{};
+    SpellingCorrector spellingCorrector;
 };
 
 #endif //TECHNICAL_TEST_LINX_QUERYPROCESSOR_H
