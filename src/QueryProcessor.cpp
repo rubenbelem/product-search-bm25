@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "QueryProcessor.h"
 #include "Scoring.h"
+#include <iostream>
 
 using namespace std;
 using namespace scoring;
@@ -17,6 +18,7 @@ void QueryProcessor::indexProduct(Product product) {
     this->productTable[product.indexId] = product;
 
     for (string token : tokens) {
+        this->spellingCorrector.addWord(token);
         this->invertedIndex.add(token, product.indexId);
     }
 
@@ -36,7 +38,25 @@ vector<QueryResult> QueryProcessor::process(const string &query) {
 
     if (queryTokens.empty()) return results;
 
-    for (auto queryToken : queryTokens) {
+    vector<string> suggestedTokens;
+    vector<string> finalQueryTokens;
+
+    for (const auto& queryToken : queryTokens) {
+        if (!this->invertedIndex.hasWord(queryToken)) {
+            vector<pair<string, int>> suggestions = this->spellingCorrector.getSuggestions(queryToken);
+
+            for (const auto& s : suggestions) {
+                suggestedTokens.emplace_back(s.first);
+            }
+        }
+        else {
+            finalQueryTokens.emplace_back(queryToken);
+        }
+    }
+
+    finalQueryTokens.insert(finalQueryTokens.end(), suggestedTokens.begin(), suggestedTokens.end());
+
+    for (const auto& queryToken : finalQueryTokens) {
         if (this->invertedIndex.hasWord(queryToken)) {
             unordered_map<int, int> *invertedList = this->invertedIndex.getInvertedList(
                     queryToken);

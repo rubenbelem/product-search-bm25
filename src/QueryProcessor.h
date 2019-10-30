@@ -11,6 +11,7 @@
 #include "ProductLengthTable.h"
 #include "Tokenizer.h"
 #include "QueryResult.h"
+#include "SpellingCorrector.h"
 
 class QueryProcessor {
 private:
@@ -27,6 +28,7 @@ public:
     InvertedIndex invertedIndex;
     ProductLengthTable productLengthTable;
     Tokenizer *tokenizer{};
+    SpellingCorrector spellingCorrector;
 };
 
 #endif //TECHNICAL_TEST_LINX_QUERYPROCESSOR_H
