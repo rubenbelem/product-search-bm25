@@ -9,17 +9,19 @@
 
 using namespace std;
 
-bool compareQueryResultsForCLI(const QueryResult& queryResult1, const QueryResult& queryResult2) {
+bool compareQueryResultsForCLI(const QueryResult &queryResult1,
+                               const QueryResult &queryResult2) {
     return queryResult1.product.id < queryResult2.product.id;
 }
 
-int main( int argc, char *argv[] ) {
+int main(int argc, char *argv[]) {
     ifstream productsFile;
     ifstream stopWordsFile;
 
     // If there isn't enough args...
     if (argc < 3) {
-        cerr << "Usage: ./processador <products-file-path> <stopwords-file-path>";
+        cerr
+                << "Usage: ./processador <products-file-path> <stopwords-file-path>";
         return 1;
     }
 
@@ -27,7 +29,8 @@ int main( int argc, char *argv[] ) {
 
     // If it fails to open Products File
     if (productsFile.fail()) {
-        cerr << "The products file on path \"" << argv[1] << "\" was not found.";
+        cerr << "The products file on path \"" << argv[1]
+             << "\" was not found.";
         return 1;
     }
 
@@ -35,7 +38,8 @@ int main( int argc, char *argv[] ) {
 
     // If it fails to open Stop Words File
     if (stopWordsFile.fail()) {
-        cerr << "The stop words file on path \"" << argv[2] << "\" was not found.";
+        cerr << "The stop words file on path \"" << argv[2]
+             << "\" was not found.";
         return 1;
     }
 
@@ -44,7 +48,7 @@ int main( int argc, char *argv[] ) {
 
     string line;
 
-    while(getline(productsFile, line)) {
+    while (getline(productsFile, line)) {
         Product product;
         product.buildFrom(line);
 
@@ -54,7 +58,7 @@ int main( int argc, char *argv[] ) {
     productsFile.close();
     stopWordsFile.close();
 
-    while(true) {
+    while (true) {
         string query;
         cout << "> Digite aqui sua consulta: ";
 
@@ -65,16 +69,16 @@ int main( int argc, char *argv[] ) {
 
         auto queryResults = queryProcessor.process(query);
 
-        std::sort(queryResults.begin(), queryResults.end(), compareQueryResultsForCLI); // sorting by product ID
+        std::sort(queryResults.begin(), queryResults.end(),
+                  compareQueryResultsForCLI); // sorting by product ID
 
         int i = 1;
         for (auto queryResult : queryResults) {
-            cout << "#" << i << " - \""<< queryResult.product.id << "\" - \""<< queryResult.product.name << "\"" << endl;
+            cout << "#" << i << " - \"" << queryResult.product.id << "\" - \""
+                 << queryResult.product.name << "\"" << endl;
             ++i;
         }
     }
-
-
 
 
     return 0;

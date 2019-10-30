@@ -19,7 +19,9 @@ public:
     QueryProcessor(int _K, Tokenizer *pTokenizer);
 
     void indexProduct(Product product);
-    std::vector<QueryResult> process(const std::string& query);
+
+    std::vector<QueryResult> process(const std::string &query);
+
 //private:
     std::unordered_map<int, Product> productTable;
     InvertedIndex invertedIndex;

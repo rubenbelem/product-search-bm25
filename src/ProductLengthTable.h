@@ -11,10 +11,15 @@ class ProductLengthTable {
 
 public:
     void add(int productIndexId, int length);
+
     int getLength(int productIndexId);
+
     int getTableSize();
+
     double getAverageSize();
+
     bool tableHasId(int id);
+
 private:
     std::unordered_map<int, int> table;
 };

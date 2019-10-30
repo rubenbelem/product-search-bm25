@@ -9,7 +9,7 @@
 using namespace std;
 using nlohmann::json;
 
-void Product::buildFrom(const std::string& jsonText) {
+void Product::buildFrom(const std::string &jsonText) {
     auto productJson = json::parse(jsonText);
 
     productJson.at("id").get_to(this->id);

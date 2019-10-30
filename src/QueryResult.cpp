@@ -4,4 +4,5 @@
 
 #include "QueryResult.h"
 
-QueryResult::QueryResult(const Product &product, double score) : product(product), score(score) {}
+QueryResult::QueryResult(const Product &product, double score) : product(
+        product), score(score) {}

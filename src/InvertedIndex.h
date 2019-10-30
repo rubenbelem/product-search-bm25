@@ -11,14 +11,18 @@
 
 class InvertedIndex {
 public:
-    void add(const std::string& token, int productIndexId);
-    int getFrequencyInProduct(const std::string& word, int indexId);
-    int getFrequencyInIndex(const std::string& word);
-    bool hasWord(const std::string& token);
-    std::unordered_map<int, int>* getInvertedList(const std::string& word);
+    void add(const std::string &token, int productIndexId);
+
+    int getFrequencyInProduct(const std::string &word, int indexId);
+
+    int getFrequencyInIndex(const std::string &word);
+
+    bool hasWord(const std::string &token);
+
+    std::unordered_map<int, int> *getInvertedList(const std::string &word);
+
 private:
     std::unordered_map<std::string, std::unordered_map<int, int>> index; // maps token string to a map that represents inverted list.
-
 };
 
 
