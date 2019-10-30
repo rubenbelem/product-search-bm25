@@ -10,11 +10,13 @@
 #include "InvertedIndex.h"
 #include "ProductLengthTable.h"
 #include "Tokenizer.h"
+#include "QueryResult.h"
 
 class QueryProcessor {
 public:
     explicit QueryProcessor(Tokenizer *pTokenizer);
     void indexProduct(Product product);
+    std::vector<QueryResult> process(const std::string& query);
 //private:
     std::unordered_map<int, Product> productTable;
     InvertedIndex invertedIndex;

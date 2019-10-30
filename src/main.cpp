@@ -45,10 +45,13 @@ int main( int argc, char *argv[] ) {
         queryProcessor.indexProduct(product);
     }
 
-    auto HAHAHA = queryProcessor.productLengthTable.getAverageSize();
+    auto queryResults = queryProcessor.process("vidro com tampa azul");
 
-    ofstream charCounting("../test/char_counting.txt");
+    for (auto queryResult : queryResults) {
+        cout << queryResult.product.name << " : " << queryResult.score << endl;
+    }
 
     productsFile.close();
+    stopWordsFile.close();
     return 0;
 }
