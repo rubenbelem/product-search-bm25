@@ -10,6 +10,3 @@ include_directories(".")
 FILE(GLOB SOURCES_AND_HEADERS "./*.cpp" "./*.h")
 
 add_library(spelling_corrector_lib ${SOURCES_AND_HEADERS})
-
-add_executable(main_spelling_corrector main.cpp)
-target_link_libraries(main_spelling_corrector spelling_corrector_lib)

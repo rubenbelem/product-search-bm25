@@ -1,0 +1,3 @@
+build/
+cmake-build-*/
+main_spelling_corrector
