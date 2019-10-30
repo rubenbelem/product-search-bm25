@@ -1,0 +1,3 @@
+[submodule "deps/nuspell"]
+	path = deps/nuspell
+	url = https://github.com/nuspell/nuspell.git
