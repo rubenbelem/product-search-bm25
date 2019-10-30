@@ -14,4 +14,4 @@ include_directories("deps/nuspell/src/parsers")
 
 FILE(GLOB SOURCES_AND_HEADERS "${SOURCE_DIRECTORY}/*.cpp" "${SOURCE_DIRECTORY}/*.h")
 add_executable(processor ${SOURCE_DIRECTORY}/main.cpp  ${SOURCES_AND_HEADERS})
-target_link_libraries(orocessor nuspell)
+target_link_libraries(processor nuspell)

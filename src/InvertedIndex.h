@@ -8,9 +8,13 @@
 
 #include <string>
 #include <unordered_map>
+#include <boost/locale/utf8_codecvt.hpp>
+#include <nuspell/dictionary.hxx>
+#include <nuspell/finder.hxx>
 
 class InvertedIndex {
 public:
+    nuspell::Dictionary dict;
     void add(const std::string &token, int productIndexId);
 
     int getFrequencyInProduct(const std::string &word, int indexId);
