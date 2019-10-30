@@ -43,10 +43,15 @@ vector<QueryResult> QueryProcessor::process(const string &query) {
 
     for (const auto& queryToken : queryTokens) {
         if (!this->invertedIndex.hasWord(queryToken)) {
+            if (queryToken.size() > this->correctionThreshold) continue;
             vector<pair<string, int>> suggestions = this->spellingCorrector.getSuggestions(queryToken);
 
+            int i = 0;
             for (const auto& s : suggestions) {
                 suggestedTokens.emplace_back(s.first);
+                ++i;
+
+                if (i == 5) break;
             }
         }
         else {
@@ -104,7 +109,7 @@ vector<QueryResult> QueryProcessor::process(const string &query) {
     return results;
 }
 
-QueryProcessor::QueryProcessor(int K, Tokenizer *pTokenizer) : tokenizer(
-        pTokenizer), K(K) {
+QueryProcessor::QueryProcessor(int K, int _correctionThreshold, Tokenizer *pTokenizer) : tokenizer(
+        pTokenizer), K(K), correctionThreshold(_correctionThreshold) {
 
 }

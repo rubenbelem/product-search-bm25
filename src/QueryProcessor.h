@@ -17,7 +17,10 @@ class QueryProcessor {
 private:
     int K;
 public:
-    QueryProcessor(int _K, Tokenizer *pTokenizer);
+    std::string maxLengthToken;
+    int correctionThreshold;
+
+    QueryProcessor(int _K, int  correctionThreshold, Tokenizer *pTokenizer);
 
     void indexProduct(Product product);
 
