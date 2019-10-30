@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -18,9 +19,9 @@ unsigned char SimplifyDoubleCharForSorting( unsigned char c1, unsigned char c2, 
     if ( c1 == 0xC2 )
     {
         if ( c2 == 0xAA ) { return 'a'; }
-        if ( c2 == 0xBA ) { return 'o'; }
-        if ( c2 == 0xA9 ) { return 'c'; }
-        if ( c2 == 0xAE ) { return 'r'; }
+        if ( c2 == 0xBA ) { return ' '; }
+        if ( c2 == 0xA9 ) { return ' '; }
+        if ( c2 == 0xAE ) { return ' '; }
     }
 
     if ( c1 == 0xC3 )
@@ -49,6 +50,11 @@ unsigned char SimplifyDoubleCharForSorting( unsigned char c1, unsigned char c2, 
         if ( c2 == 0xBD ) { return changeToLowerCase ? 'z' : 'Z'; }
         if ( c2 == 0xBE ) { return 'z'; }
         if ( c2 == 0xB8 ) { return changeToLowerCase ? 'y' : 'Y'; }
+    }
+
+    if (c1 == 0xE2) {
+        if (c2 == 0x84) return ' ';
+        if (c2 == 0x80) return '"';
     }
 
     return c1;
@@ -168,14 +174,23 @@ void SimplifyStringForSorting( string *s, bool changeToLowerCase )
     }
 }
 
+string removePunctuation(const string& text) {
+    string result;
+    std::replace_copy_if(text.begin(), text.end(),
+                        std::back_inserter(result), //Store output
+                        std::ptr_fun<int, int>(&std::ispunct), ' '
+    );
+
+    return result;
+}
+
 std::vector<std::string> Tokenizer::get(const std::string& s) {
     vector<string> tokens;
     string token;
     string toConvert = s;
 
-    char *convertedString = (char*) malloc(sizeof(char) * s.length());
-    //const string& convertedString = UTF8toISO8859_1(s.c_str());
     SimplifyStringForSorting(&toConvert, true);
+    toConvert = removePunctuation(toConvert);
 
     istringstream tokenStream(toConvert);
 
