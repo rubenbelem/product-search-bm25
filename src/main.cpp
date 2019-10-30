@@ -90,8 +90,6 @@ int main(int argc, char *argv[]) {
             "\n\nYou can type \"$exit()\" (without quotes) anytime to finish "
             "the program.\n";
 
-
-
     while (true) {
         string query;
 
@@ -121,7 +119,6 @@ int main(int argc, char *argv[]) {
 
 
     }
-
 
     return 0;
 }

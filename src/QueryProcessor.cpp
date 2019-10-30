@@ -76,6 +76,7 @@ vector<QueryResult> QueryProcessor::process(const string &query) {
 
         std::pop_heap(resultHeap.begin(), resultHeap.end(),
                       compareQueryResults);
+      
         resultHeap.pop_back();
         if (i == K - 1) break;
     }
