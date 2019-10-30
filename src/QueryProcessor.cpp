@@ -3,6 +3,7 @@
 //
 
 #include <string>
+#include <algorithm>
 #include "QueryProcessor.h"
 #include "Scoring.h"
 
@@ -22,12 +23,17 @@ void QueryProcessor::indexProduct(Product product) {
     this->productLengthTable.add(product.indexId, tokens.size());
 }
 
+bool compareQueryResults(const QueryResult& queryResult1, const QueryResult& queryResult2) {
+    return queryResult1.score < queryResult2.score;
+}
+
 vector<QueryResult> QueryProcessor::process(const string& query) {
     unordered_map<int, double> queryResults;
-    vector<QueryResult> products;
+    vector<QueryResult> results;
+
     auto queryTokens = tokenizer->extractFrom(query);
 
-    if (queryTokens.empty()) return products;
+    if (queryTokens.empty()) return results;
 
     for (auto queryToken : queryTokens) {
         if (this->invertedIndex.hasWord(queryToken)) {
@@ -46,18 +52,27 @@ vector<QueryResult> QueryProcessor::process(const string& query) {
         }
     }
 
-    int i = 0;
+    vector<QueryResult> topK;
+
     for (auto queryResult : queryResults) {
         Product p = this->productTable[queryResult.first];
         double score = queryResult.second;
 
-        products.emplace_back(p, score);
-        ++i;
+        topK.emplace_back(p, score);
 
-        if (i == 20) break;
+        std::push_heap(topK.begin(), topK.end(), compareQueryResults);
     }
 
-    return products;
+    for (int i = 0; i < K; ++i) {
+        results.push_back(topK.front());
+
+        std::pop_heap(topK.begin(), topK.end(), compareQueryResults);
+        topK.pop_back();
+    }
+
+    return results;
 }
 
-QueryProcessor::QueryProcessor(Tokenizer *pTokenizer) : tokenizer(pTokenizer) {}
+QueryProcessor::QueryProcessor(int K, Tokenizer *pTokenizer) : tokenizer(pTokenizer), K(K){
+
+}

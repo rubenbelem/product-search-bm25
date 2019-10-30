@@ -34,7 +34,7 @@ int main( int argc, char *argv[] ) {
     }
 
     Tokenizer tokenizer(stopWordsFile);
-    QueryProcessor queryProcessor(&tokenizer);
+    QueryProcessor queryProcessor(20, &tokenizer);
 
     string line;
 
@@ -47,6 +47,7 @@ int main( int argc, char *argv[] ) {
 
     auto queryResults = queryProcessor.process("vidro com tampa azul");
 
+    int i = 0;
     for (auto queryResult : queryResults) {
         cout << queryResult.product.name << " : " << queryResult.score << endl;
     }
