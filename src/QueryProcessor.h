@@ -15,7 +15,7 @@ class QueryProcessor {
 public:
     explicit QueryProcessor(Tokenizer *pTokenizer);
     void indexProduct(Product product);
-private:
+//private:
     std::unordered_map<int, Product> productTable;
     InvertedIndex invertedIndex;
     ProductLengthTable productLengthTable;

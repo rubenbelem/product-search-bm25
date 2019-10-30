@@ -9,10 +9,13 @@ using namespace std;
 
 void QueryProcessor::indexProduct(Product product) {
     auto tokens = tokenizer->extractFrom(product.name);
-    int indexId = this->productTable.size();
-    product.indexId = indexId;
+    product.indexId = this->productTable.size() + 1;
 
-    this->productTable[indexId] = product;
+    this->productTable[product.indexId] = product;
+
+    for (string token : tokens) {
+        this->invertedIndex.add(token, product.indexId);
+    }
 }
 
 QueryProcessor::QueryProcessor(Tokenizer *pTokenizer) : tokenizer(pTokenizer) {
