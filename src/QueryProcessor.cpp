@@ -52,22 +52,23 @@ vector<QueryResult> QueryProcessor::process(const string& query) {
         }
     }
 
-    vector<QueryResult> topK;
+    vector<QueryResult> resultHeap;
 
     for (auto queryResult : queryResults) {
         Product p = this->productTable[queryResult.first];
         double score = queryResult.second;
 
-        topK.emplace_back(p, score);
+        resultHeap.emplace_back(p, score);
 
-        std::push_heap(topK.begin(), topK.end(), compareQueryResults);
+        std::push_heap(resultHeap.begin(), resultHeap.end(), compareQueryResults);
     }
 
-    for (int i = 0; i < K; ++i) {
-        results.push_back(topK.front());
+    for (int i = 0; i < resultHeap.size(); ++i) {
+        results.push_back(resultHeap.front());
 
-        std::pop_heap(topK.begin(), topK.end(), compareQueryResults);
-        topK.pop_back();
+        std::pop_heap(resultHeap.begin(), resultHeap.end(), compareQueryResults);
+        resultHeap.pop_back();
+        if (i == K - 1) break;
     }
 
     return results;

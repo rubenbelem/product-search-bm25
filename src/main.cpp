@@ -4,8 +4,14 @@
 #include "QueryProcessor.h"
 #include "Tokenizer.h"
 #include <unordered_map>
+#include <algorithm>
+#include <climits>
 
 using namespace std;
+
+bool compareQueryResultsForCLI(const QueryResult& queryResult1, const QueryResult& queryResult2) {
+    return queryResult1.product.id < queryResult2.product.id;
+}
 
 int main( int argc, char *argv[] ) {
     ifstream productsFile;
@@ -45,14 +51,31 @@ int main( int argc, char *argv[] ) {
         queryProcessor.indexProduct(product);
     }
 
-    auto queryResults = queryProcessor.process("vidro com tampa azul");
-
-    int i = 0;
-    for (auto queryResult : queryResults) {
-        cout << queryResult.product.name << " : " << queryResult.score << endl;
-    }
-
     productsFile.close();
     stopWordsFile.close();
+
+    while(true) {
+        string query;
+        cout << "> Digite aqui sua consulta: ";
+
+        cin.clear();
+
+        cin >> query;
+
+
+        auto queryResults = queryProcessor.process(query);
+
+        std::sort(queryResults.begin(), queryResults.end(), compareQueryResultsForCLI); // sorting by product ID
+
+        int i = 1;
+        for (auto queryResult : queryResults) {
+            cout << "#" << i << " - \""<< queryResult.product.id << "\" - \""<< queryResult.product.name << "\"" << endl;
+            ++i;
+        }
+    }
+
+
+
+
     return 0;
 }
