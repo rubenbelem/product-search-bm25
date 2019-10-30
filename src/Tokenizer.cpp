@@ -155,8 +155,8 @@ namespace {
     }
 }
 
-bool Tokenizer::isStopword(const string& s) {
-    return this->stopwordsMap.find(s) != this->stopwordsMap.end();
+bool Tokenizer::isStopWord(const string& s) {
+    return this->stopWordsMap.find(s) != this->stopWordsMap.end();
 }
 
 std::vector<std::string> Tokenizer::extractFrom(const std::string &s) {
@@ -172,7 +172,7 @@ std::vector<std::string> Tokenizer::extractFrom(const std::string &s) {
     while (std::getline(tokenStream, token, ' ')) {
         // if token is not empty, then check whether it isn't a stop word, and if so, add it to the tokens list.
         if (!token.empty()) {
-            if (!isStopword(token))
+            if (!isStopWord(token))
                 tokens.push_back(token);
         }
     }
@@ -182,11 +182,11 @@ std::vector<std::string> Tokenizer::extractFrom(const std::string &s) {
 
 Tokenizer::Tokenizer() = default;
 
-Tokenizer::Tokenizer(std::ifstream& stopwordsFile) {
+Tokenizer::Tokenizer(std::ifstream& stopWordsFile) {
     string line;
 
-    while(getline(stopwordsFile, line)) {
+    while(getline(stopWordsFile, line)) {
         ::simplifyString(&line, true);
-        this->stopwordsMap[line] = true;
+        this->stopWordsMap[line] = true;
     }
 }

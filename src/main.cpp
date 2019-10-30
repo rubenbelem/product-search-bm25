@@ -9,7 +9,7 @@ using namespace std;
 
 int main( int argc, char *argv[] ) {
     ifstream productsFile;
-    ifstream stopwordsFile;
+    ifstream stopWordsFile;
 
     // If there isn't enough args...
     if (argc < 3) {
@@ -25,15 +25,15 @@ int main( int argc, char *argv[] ) {
         return 1;
     }
 
-    stopwordsFile.open(argv[2]);
+    stopWordsFile.open(argv[2]);
 
     // If it fails to open Stop Words File
-    if (stopwordsFile.fail()) {
+    if (stopWordsFile.fail()) {
         cerr << "The stop words file on path \"" << argv[2] << "\" was not found.";
         return 1;
     }
 
-    Tokenizer tokenizer(stopwordsFile);
+    Tokenizer tokenizer(stopWordsFile);
     QueryProcessor queryProcessor(&tokenizer);
 
     string line;
