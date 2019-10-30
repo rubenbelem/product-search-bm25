@@ -4,13 +4,14 @@
 #include "../deps/json/json.hpp"
 #include "Product.h"
 #include "Tokenizer.h"
-
+#include <unordered_map>
 using namespace std;
 using nlohmann::json;
 
 int main( int argc, char *argv[] ) {
     ifstream productsFile;
     Tokenizer tokenizer;
+    unordered_map<string , int> chars;
     if (argc < 2) {
         cout << "The 1st parameter <data_path> must be set!";
         return 1;
@@ -33,10 +34,16 @@ int main( int argc, char *argv[] ) {
 
         auto tokens = tokenizer.get(product.name);
 
-        for (auto token : tokens) {
+        for (const string& token : tokens) {
             cout << token << "|";
         }
         cout << endl;
+    }
+
+    ofstream charCounting("../test/char_counting.txt");
+
+    for (auto ch : chars) {
+        charCounting << ch.first << " : " << ch.second << endl;
     }
 
     productsFile.close();
