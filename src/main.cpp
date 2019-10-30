@@ -10,19 +10,28 @@ using nlohmann::json;
 
 int main( int argc, char *argv[] ) {
     ifstream productsFile;
-    Tokenizer tokenizer;
-    unordered_map<string , int> chars;
-    if (argc < 2) {
-        cout << "The 1st parameter <data_path> must be set!";
+    ifstream stopwordsFile;
+
+    if (argc < 3) {
+        cerr << "Usage: ./processador <products-file-path> <stopwords-file-path>";
         return 1;
     }
 
     productsFile.open(argv[1]);
 
     if (productsFile.fail()) {
-        cout << "The products file was not found.";
+        cerr << "The products file on path \"" << argv[1] << "\" was not found.";
         return 1;
     }
+
+    stopwordsFile.open(argv[2]);
+
+    if (stopwordsFile.fail()) {
+        cerr << "The stop words file on path \"" << argv[2] << "\" was not found.";
+        return 1;
+    }
+
+    Tokenizer tokenizer(stopwordsFile);
 
     string line;
 
@@ -32,7 +41,7 @@ int main( int argc, char *argv[] ) {
         productJson.at("id").get_to(product.id);
         productJson.at("name").get_to(product.name);
 
-        auto tokens = tokenizer.get(product.name);
+        auto tokens = tokenizer.extractFrom(product.name);
 
         for (const string& token : tokens) {
             cout << token << "|";
@@ -41,10 +50,6 @@ int main( int argc, char *argv[] ) {
     }
 
     ofstream charCounting("../test/char_counting.txt");
-
-    for (auto ch : chars) {
-        charCounting << ch.first << " : " << ch.second << endl;
-    }
 
     productsFile.close();
     return 0;
