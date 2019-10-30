@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
             ++i;
         }
 
-        cout << "Query processed in " << queryProcessingTime << "ms.\n";
+        cout << "\nQuery processed in " << queryProcessingTime << "ms.\n";
     }
 
     return 0;
