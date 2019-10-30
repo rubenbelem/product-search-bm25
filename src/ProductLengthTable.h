@@ -1,0 +1,14 @@
+//
+// Created by rubelem on 10/30/19.
+//
+
+#ifndef TECHNICAL_TEST_LINX_PRODUCTLENGTHTABLE_H
+#define TECHNICAL_TEST_LINX_PRODUCTLENGTHTABLE_H
+
+
+class ProductLengthTable {
+
+};
+
+
+#endif //TECHNICAL_TEST_LINX_PRODUCTLENGTHTABLE_H
