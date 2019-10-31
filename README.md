@@ -12,10 +12,10 @@ Primeiramente, é necessário possuir o _Git_ instalado. É possível instalá-l
 sudo apt install git
 ```
 
-Para compilar o programa, são necessários a instalação do _CMake_, _Make_ e _g++_, com o comando:
+Para compilar o programa, são necessários a instalação do _CMake_, _Make_ e _g++_, e _libreadline-dev_, com o comando:
 
 ```
-sudo apt install cmake make g++
+sudo apt install cmake make g++ libreadline-dev
 ```
 
 #### Clonando o repositório
@@ -23,8 +23,8 @@ sudo apt install cmake make g++
 É preciso clonar este repositório com o Git, e então navegar até o diretório clonado (o diretório raíz do projeto, _<dir_raiz\>_) com os comandos:
 
 ```
-git clone https://github.com/rubenbelem/technical-test-linx.git
-cd technical-test-linx
+git clone https://github.com/rubenbelem/teste-tecnico-linx.git
+cd teste-tecnico-linx
 ```
 
 #### Compilando o programa
