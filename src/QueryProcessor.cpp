@@ -48,53 +48,37 @@ vector<QueryResult> QueryProcessor::process(const string &query) {
 
     if (queryTokens.empty()) return results;
 
-    vector<string> suggestedTokens;
-    vector<string> finalQueryTokens;
-
-    // Code to produce a final query with terms that exists in the Index and correction suggestions that also exists in the Index
-    for (const auto &queryToken : queryTokens) {
+    // score Products with BM25 for each token and combining by summing scores
+    for (string queryToken : queryTokens) {
+        // try to correct if the index doesn't have the term
         if (!this->invertedIndex.hasWord(queryToken)) {
             if (queryToken.size() > this->correctionThreshold) continue;
-            vector<pair<string, int>> suggestions = this->spellingCorrector.getSuggestions(queryToken);
-
-            int i = 0;
-            for (const auto &s : suggestions) {
-                suggestedTokens.emplace_back(s.first);
-                ++i;
-
-                if (i == 5) break;
-            }
-        } else {
-            finalQueryTokens.emplace_back(queryToken);
+            queryToken = this->spellingCorrector.correct(queryToken);
         }
-    }
 
-    finalQueryTokens.insert(finalQueryTokens.end(), suggestedTokens.begin(), suggestedTokens.end());
+        if (queryToken.empty()) continue;
 
-    // score Products with BM25 for each token and combining by summing scores
-    for (const auto &queryToken : finalQueryTokens) {
-        if (this->invertedIndex.hasWord(queryToken)) {
-            unordered_map<int, int> *invertedList = this->invertedIndex.getInvertedList(
-                    queryToken);
+        unordered_map<int, int> *invertedList = this->invertedIndex.getInvertedList(
+                queryToken);
 
-            // If there is a inverted list for this token
-            if (invertedList != nullptr) {
-                for (auto item : *invertedList) {
-                    int productIndexId = item.first;
-                    int frequency = item.second;
+        // If there is a inverted list for this token
+        if (invertedList != nullptr) {
+            for (auto item : *invertedList) {
+                int productIndexId = item.first;
+                int frequency = item.second;
 
-                    // BM25 score for this product, considering the current queryToken
-                    double score = scoring::BM25::score(invertedList->size(),
-                                                        frequency, 1, 0,
-                                                        this->productLengthTable.getTableSize(),
-                                                        this->productLengthTable.getLength(
-                                                                productIndexId),
-                                                        this->productLengthTable.getAverageSize());
+                // BM25 score for this product, considering the current queryToken
+                double score = scoring::BM25::score(invertedList->size(),
+                                                    frequency, 1, 0,
+                                                    this->productLengthTable.getTableSize(),
+                                                    this->productLengthTable.getLength(
+                                                            productIndexId),
+                                                    this->productLengthTable.getAverageSize());
 
-                    queryResults[productIndexId] += score;
-                }
+                queryResults[productIndexId] += score;
             }
         }
+        
     }
 
     vector<QueryResult> resultHeap;

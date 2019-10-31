@@ -12,7 +12,7 @@ Primeiramente, é necessário possuir o _Git_ instalado. É possível instalá-l
 sudo apt install git
 ```
 
-Para compilar o programa, são necessários a instalação do _CMake_, _Make_ e _g++_, e _libreadline-dev_, com o comando:
+Para compilar o programa, é necessária a instalação do _CMake_, _Make_ e _g++_, e _libreadline-dev_, com o comando:
 
 ```
 sudo apt install cmake make g++ libreadline-dev
@@ -45,7 +45,7 @@ Ainda no diretório raíz, navegue até o diretório _bin_:
 cd bin
 ```
 
-O programa "_processador_" recebe três argumentos.
+O programa "_processador_" recebe três argumentos:
 
 - O primeiro é o caminho do arquivo "_catalogo_produtos.json_", que contém a lista de produtos a serem indexados pelo processador de consultas
 - O segundo é o caminho do arquivo "stopwords.txt", que contém uma lista de palavras comuns de uma língua, a serem ignoradas na etapa indexação.
@@ -67,11 +67,11 @@ ou
 
 As consultas podem ser feitas com mais de um termo, e com caracteres especiais (como por exemplo "Relógio Azul") que estejam de acordo com a codificação _ISO 8859-1_.
 
-O programa está preparado para receber uma consulta na codificação _UTF-8_ e convertê-la em _ISO 8859-1_. Os textos dos produtos também são codificados em _ISO 8859-1_ antes de terem seus termos indexados. Ou seja, é necessário executar o programa em um terminal com codificação _UTF-8_, como o _bash_ padrão do _Ubuntu_ ou _Linux Mint_.
+O programa espera receber uma consulta na codificação _UTF-8_, a codifica em _ISO 8859-1_. Os textos dos produtos também são codificados em _ISO 8859-1_ antes de terem seus termos indexados. Ou seja, é necessário executar o programa em um terminal com codificação _UTF-8_, como o _bash_ padrão do _Ubuntu_ ou _Linux Mint_.
 
-Além disso, o programa também suporta correção de termos da consulta, para termos com tamanho de até 15 caracteres. Caso um termo da consulta não esteja idnexado, o processador de consultas pega as 5 melhores sugestões de correção e os adiciona na consulta, realizando uma _expansão local_ [[1]](https://www.iro.umontreal.ca/~nie/IFT6255/carpineto-Survey-QE.pdf). Assim, a consulta "relxgio pzul" traz os mesmos resultaados da consulta "relógio azul", por exemplo.
+Além disso, o programa também suporta correção de termos da consulta para termos com tamanho de até 15 caracteres. A forma de implementação foi: caso um termo da consulta não esteja indexado, o "SpellingCorrector" calcula sugestões de correção e adiciona aquela que foi com o maior "ranking", e então o processador de consultas a adiciona na consulta, realizando um tipo de _expansão local_ [[1]](https://www.iro.umontreal.ca/~nie/IFT6255/carpineto-Survey-QE.pdf) da mesma. Assim, a consulta "relxgio pzul" traz os mesmos resultados da consulta "relógio azul", por exemplo.
 
-O método de correção de termos é o Algoritmo de Peter Norvig [[2]](https://norvig.com/spell-correct.html). Utilizei a implementação em C++ citada por ele na página onde mostra o algoritmo, a qual está presente no repositório https://github.com/felipefarinon/spellingcorrector. Essa implementação em C++, no entanto, não continha um método/função que trouxesse várias sugestões de correção, e sim, apenas uma função que sugere uma única correção para uma palavra. Então, ao incorporar essa implementação em C++ do algoritmo de Peter Norvig no meu projeto, implementei em seu código-fonte um novo método que retorna sugestões de correção para uma palavra.
+O método de correção de termos é o Algoritmo de Peter Norvig [[2]](https://norvig.com/spell-correct.html), escrito originalmente em Python. Utilizei a versão implementada em C++, presente no repositório https://github.com/felipefarinon/spellingcorrector, citada por ele na página onde mostra o algoritmo.
 
 #### Referências
 

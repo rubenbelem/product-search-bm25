@@ -101,29 +101,30 @@ int main(int argc, char *argv[]) {
         auto queryProcessingTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         if (queryResults.empty()) {
-            cout << "\nNenhum resultado encontrado.\n\n";
-            continue;
+            cout << "\nNenhum resultado encontrado.\n";
+            
+        }
+        else {
+            // The queryResults array already comes sorted from queryProcessor
+            // So, if the user choose sort to by "score" there's nothing left to do with the
+            // queryResults array.
+            if (sortOption == "id") {
+                std::sort(queryResults.begin(), queryResults.end(),
+                        compareQueryResultsByID); // sorting by product ID
+            }
+
+            cout << endl;
+            int i = 1;
+
+            // Printing query results
+            for (const auto &queryResult : queryResults) {
+                cout << "#" << i << " - \"" << queryResult.product.id << "\" - \""
+                    << queryResult.product.name << "\""  << endl;
+                ++i;
+            }
         }
 
-        // The queryResults array already comes sorted from queryProcessor
-        // So, if the user choose sort to by "score" there's nothing left to do with the
-        // queryResults array.
-        if (sortOption == "1") {
-            std::sort(queryResults.begin(), queryResults.end(),
-                      compareQueryResultsByID); // sorting by product ID
-        }
-
-        cout << endl;
-        int i = 1;
-
-        // Printing query results
-        for (const auto &queryResult : queryResults) {
-            cout << "#" << i << " - \"" << queryResult.product.id << "\" - \""
-                 << queryResult.product.name << "\"" << endl;
-            ++i;
-        }
-
-        cout << "\nConsulta processada em " << queryProcessingTime << "ms.\n";
+        cout << "\nConsulta processada em " << queryProcessingTime << "ms.\n\n";
 
         free((void *) line);
     }
