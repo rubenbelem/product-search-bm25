@@ -7,6 +7,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 include_directories(".")
 
-FILE(GLOB SOURCES_AND_HEADERS "./*.cpp" "./*.h")
+FILE(GLOB SOURCES_AND_HEADERS "./*.cpp" "./*.hpp")
 
 add_library(spelling_corrector_lib ${SOURCES_AND_HEADERS})

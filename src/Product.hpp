@@ -1,5 +1,5 @@
-#ifndef TECHNICAL_TEST_LINX_PRODUCT_H
-#define TECHNICAL_TEST_LINX_PRODUCT_H
+#ifndef TECHNICAL_TEST_LINX_PRODUCT_HPP
+#define TECHNICAL_TEST_LINX_PRODUCT_HPP
 
 #include <string>
 
@@ -11,4 +11,4 @@ struct Product {
     void buildFrom(const std::string &basicString);
 };
 
-#endif //TECHNICAL_TEST_LINX_PRODUCT_H
+#endif //TECHNICAL_TEST_LINX_PRODUCT_HPP

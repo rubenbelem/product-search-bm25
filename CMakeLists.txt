@@ -10,6 +10,6 @@ include_directories("deps/json")
 include_directories("deps/spellingcorrector")
 add_subdirectory("deps/spellingcorrector")
 
-FILE(GLOB SOURCES_AND_HEADERS "${SOURCE_DIRECTORY}/*.cpp" "${SOURCE_DIRECTORY}/*.h")
+FILE(GLOB SOURCES_AND_HEADERS "${SOURCE_DIRECTORY}/*.cpp" "${SOURCE_DIRECTORY}/*.hpp")
 add_executable(processor ${SOURCE_DIRECTORY}/main.cpp  ${SOURCES_AND_HEADERS})
 target_link_libraries(processor spelling_corrector_lib)

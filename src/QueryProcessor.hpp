@@ -2,16 +2,16 @@
 // Created by rubelem on 10/30/19.
 //
 
-#ifndef TECHNICAL_TEST_LINX_QUERYPROCESSOR_H
-#define TECHNICAL_TEST_LINX_QUERYPROCESSOR_H
+#ifndef TECHNICAL_TEST_LINX_QUERYPROCESSOR_HPP
+#define TECHNICAL_TEST_LINX_QUERYPROCESSOR_HPP
 
 #include <unordered_map>
-#include "Product.h"
-#include "InvertedIndex.h"
-#include "ProductLengthTable.h"
-#include "Tokenizer.h"
-#include "QueryResult.h"
-#include "SpellingCorrector.h"
+#include "Product.hpp"
+#include "InvertedIndex.hpp"
+#include "ProductLengthTable.hpp"
+#include "Tokenizer.hpp"
+#include "QueryResult.hpp"
+#include "SpellingCorrector.hpp"
 
 class QueryProcessor {
 private:
@@ -20,7 +20,7 @@ public:
     std::string maxLengthToken;
     int correctionThreshold;
 
-    QueryProcessor(int _K, int  correctionThreshold, Tokenizer *pTokenizer);
+    QueryProcessor(int _K, int correctionThreshold, Tokenizer *pTokenizer);
 
     void indexProduct(Product product);
 
@@ -34,4 +34,4 @@ public:
     SpellingCorrector spellingCorrector;
 };
 
-#endif //TECHNICAL_TEST_LINX_QUERYPROCESSOR_H
+#endif //TECHNICAL_TEST_LINX_QUERYPROCESSOR_HPP

@@ -2,8 +2,8 @@
 // Created by rubelem on 10/29/19.
 //
 
-#ifndef TECHNICAL_TEST_LINX_TOKENIZER_H
-#define TECHNICAL_TEST_LINX_TOKENIZER_H
+#ifndef TECHNICAL_TEST_LINX_TOKENIZER_HPP
+#define TECHNICAL_TEST_LINX_TOKENIZER_HPP
 
 #include <string>
 #include <vector>
@@ -22,4 +22,4 @@ private:
     bool isStopWord(const std::string &s);
 };
 
-#endif //TECHNICAL_TEST_LINX_TOKENIZER_H
+#endif //TECHNICAL_TEST_LINX_TOKENIZER_HPP

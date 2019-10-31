@@ -2,8 +2,8 @@
 // Created by rubelem on 10/29/19.
 //
 
-#include "Tokenizer.h"
-#include "Product.h"
+#include "Tokenizer.hpp"
+#include "Product.hpp"
 #include <cstring>
 #include <sstream>
 #include <iostream>

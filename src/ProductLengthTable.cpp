@@ -2,7 +2,7 @@
 // Created by rubelem on 10/30/19.
 //
 
-#include "ProductLengthTable.h"
+#include "ProductLengthTable.hpp"
 
 void ProductLengthTable::add(int productIndexId, int length) {
     this->table[productIndexId] = length;

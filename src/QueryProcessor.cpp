@@ -4,8 +4,8 @@
 
 #include <string>
 #include <algorithm>
-#include "QueryProcessor.h"
-#include "Scoring.h"
+#include "QueryProcessor.hpp"
+#include "Scoring.hpp"
 #include <iostream>
 
 using namespace std;
@@ -41,27 +41,26 @@ vector<QueryResult> QueryProcessor::process(const string &query) {
     vector<string> suggestedTokens;
     vector<string> finalQueryTokens;
 
-    for (const auto& queryToken : queryTokens) {
+    for (const auto &queryToken : queryTokens) {
         if (!this->invertedIndex.hasWord(queryToken)) {
             if (queryToken.size() > this->correctionThreshold) continue;
             vector<pair<string, int>> suggestions = this->spellingCorrector.getSuggestions(queryToken);
 
             int i = 0;
-            for (const auto& s : suggestions) {
+            for (const auto &s : suggestions) {
                 suggestedTokens.emplace_back(s.first);
                 ++i;
 
                 if (i == 5) break;
             }
-        }
-        else {
+        } else {
             finalQueryTokens.emplace_back(queryToken);
         }
     }
 
     finalQueryTokens.insert(finalQueryTokens.end(), suggestedTokens.begin(), suggestedTokens.end());
 
-    for (const auto& queryToken : finalQueryTokens) {
+    for (const auto &queryToken : finalQueryTokens) {
         if (this->invertedIndex.hasWord(queryToken)) {
             unordered_map<int, int> *invertedList = this->invertedIndex.getInvertedList(
                     queryToken);
@@ -101,7 +100,7 @@ vector<QueryResult> QueryProcessor::process(const string &query) {
 
         std::pop_heap(resultHeap.begin(), resultHeap.end(),
                       compareQueryResults);
-      
+
         resultHeap.pop_back();
         if (i == K - 1) break;
     }

@@ -3,7 +3,7 @@
 //
 
 #include <string>
-#include "Product.h"
+#include "Product.hpp"
 #include "json.hpp"
 
 using namespace std;

@@ -2,8 +2,8 @@
 // Created by rubelem on 10/30/19.
 //
 
-#ifndef TECHNICAL_TEST_LINX_SCORING_H
-#define TECHNICAL_TEST_LINX_SCORING_H
+#ifndef TECHNICAL_TEST_LINX_SCORING_HPP
+#define TECHNICAL_TEST_LINX_SCORING_HPP
 
 #include <cmath>
 
@@ -28,4 +28,4 @@ namespace scoring {
 };
 
 
-#endif //TECHNICAL_TEST_LINX_SCORING_H
+#endif //TECHNICAL_TEST_LINX_SCORING_HPP

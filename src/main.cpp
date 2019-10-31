@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include "QueryProcessor.h"
-#include "Tokenizer.h"
+#include "QueryProcessor.hpp"
+#include "Tokenizer.hpp"
 #include <unordered_map>
 #include <algorithm>
 #include <climits>
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
         if (sortOption == "1") {
             std::sort(queryResults.begin(), queryResults.end(),
                       compareQueryResultsByID); // sorting by product ID
-         }
+        }
 
         cout << endl;
         int i = 1;

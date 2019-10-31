@@ -2,7 +2,7 @@
 // Created by rubelem on 10/30/19.
 //
 
-#include "InvertedIndex.h"
+#include "InvertedIndex.hpp"
 
 using namespace std;
 
