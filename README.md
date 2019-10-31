@@ -63,7 +63,9 @@ ou
 ./processador ../data/catalogo_produtos.json ../data/stopwords.txt score
 ```
 
-#### Comentários
+#### Comentários sobre o programa
+
+As consultas realizadas são armazenadas em um histórico. É possível navegar por esse histórico utilizando as setas para cima e para baixo do teclado.
 
 As consultas podem ser feitas com mais de um termo, e com caracteres especiais (como por exemplo "Relógio Azul") que estejam de acordo com a codificação _ISO 8859-1_.
 
