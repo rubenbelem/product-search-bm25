@@ -67,7 +67,7 @@ ou
 
 As consultas podem ser feitas com mais de um termo, e com caracteres especiais (como por exemplo "Relógio Azul") que estejam de acordo com a codificação _ISO 8859-1_.
 
-O programa está preparado para receber uma consulta na codificação _UTF-8_ e convertê-la em _ISO 8859-1_. Os textos dos produtos também são codificados em _ISO 8859-1_ antes de terem seus termos indexados.
+O programa está preparado para receber uma consulta na codificação _UTF-8_ e convertê-la em _ISO 8859-1_. Os textos dos produtos também são codificados em _ISO 8859-1_ antes de terem seus termos indexados. Ou seja, é necessário executar o programa em um terminal com codificação _UTF-8_, como o _bash_ padrão do _Ubuntu_ ou _Linux Mint_.
 
 Além disso, o programa também suporta correção de termos da consulta, para termos com tamanho de até 15 caracteres. Caso um termo da consulta não esteja idnexado, o processador de consultas pega as 5 melhores sugestões de correção e os adiciona na consulta, realizando uma _expansão local_ [[1]](https://www.iro.umontreal.ca/~nie/IFT6255/carpineto-Survey-QE.pdf). Assim, a consulta "relxgio pzul" traz os mesmos resultaados da consulta "relógio azul", por exemplo.
 
