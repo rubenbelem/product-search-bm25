@@ -26,7 +26,7 @@ public:
 
     std::vector<QueryResult> process(const std::string &query);
 
-//private:
+private:
     std::unordered_map<int, Product> productTable;
     InvertedIndex invertedIndex;
     ProductLengthTable productLengthTable;

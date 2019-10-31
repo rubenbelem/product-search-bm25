@@ -15,6 +15,7 @@ public:
 
     Tokenizer();
 
+    // Tokenizer can take a stop words file in a constructor parameter, to read it and build stopWordsMap.
     explicit Tokenizer(std::ifstream &stopWordsFile);
 
 private:

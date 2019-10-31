@@ -22,10 +22,8 @@ namespace scoring {
             double third = ((k2 + 1) * qf) / (k2 + qf);
             return first * second * third;
         }
-
-    };
-
-};
+    }
+}
 
 
 #endif //TECHNICAL_TEST_LINX_SCORING_HPP

@@ -23,9 +23,8 @@ int main(int argc, char *argv[]) {
 
     // If there isn't enough args...
     if (argc < 4) {
-        cerr
-                << "Forma de uso: ./processador <caminho-do-arquivo-de-produtos> "
-                   "<caminho-do-arquivo-de-stopwords> <forma-de-ordenar-saida>";
+        cerr << "Forma de uso: ./processador <caminho-do-arquivo-de-produtos> "
+                "<caminho-do-arquivo-de-stopwords> <forma-de-ordenar-saida>\n";
         return 1;
     }
 
@@ -34,7 +33,7 @@ int main(int argc, char *argv[]) {
     // If it fails to open Products File
     if (productsFile.fail()) {
         cerr << "O arquivo de produtos no caminho \"" << argv[1]
-             << "\" não foi encontrado.";
+             << "\" não foi encontrado.\n";
         return 1;
     }
 
@@ -43,20 +42,21 @@ int main(int argc, char *argv[]) {
     // If it fails to open Stop Words File
     if (stopWordsFile.fail()) {
         cerr << "O arquivo de stop words no caminho \"" << argv[2]
-             << "\" não foi encontrado.";
+             << "\" não foi encontrado.\n";
         return 1;
     }
 
     string sortOption(argv[3]);
 
+    // sort option wasn't valid
     if (sortOption != "id" && sortOption != "score") {
-        cerr << "A opção de ordenação da saída escolhida é invalida. O valor deve ser \"id\" ou \"score\"";
+        cerr << "A opção de ordenação da saída escolhida é invalida. O valor deve ser \"id\" ou \"score\"\n";
         return 1;
     }
 
     cout << "Bem-vindo(a) ao Processador de Consultas do Rúben!\n";
 
-    cout << "\nCerto! A etapa de indexação se inicia agora.\n\n";
+    cout << "\nCerto! A etapa de indexação se inicia agora.\n";
 
     Tokenizer tokenizer(stopWordsFile);
     QueryProcessor queryProcessor(20, 15, &tokenizer);
@@ -81,22 +81,19 @@ int main(int argc, char *argv[]) {
     productsFile.close();
     stopWordsFile.close();
 
-    cout << "\bA etapa de indexação terminou! Iniciando o Processador de Consultas. "
+    cout << "\nA etapa de indexação terminou! Iniciando o Processador de Consultas. "
+            "\n\nPara navegar no histórico de consultas realizadas, utilize as teclas de seta para cima e para baixo."
             "\n\nVocê pode digitar \"@sair\" (sem aspas) ou pressionar Ctrl+C a qualquer momento "
-            "para terminar a execução do programa.\n";
+            "para terminar a execução do programa.\n\n";
 
     const char *line;
     while ((line = readline("> Digite aqui sua consulta: ")) != nullptr) {
-        //string query;
-
-        //cout << "\n> Digite aqui sua consulta: ";
-
         if (*line) add_history(line);
         string query(line);
 
-
         if (query == "@sair") break;
 
+        // Query processing
         auto start = std::chrono::system_clock::now();
         auto queryResults = queryProcessor.process(query);
         auto end = std::chrono::system_clock::now();
@@ -104,6 +101,7 @@ int main(int argc, char *argv[]) {
         auto queryProcessingTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         if (queryResults.empty()) {
+            cout << "\nNenhum resultado encontrado.\n\n";
             continue;
         }
 
@@ -117,7 +115,9 @@ int main(int argc, char *argv[]) {
 
         cout << endl;
         int i = 1;
-        for (const auto& queryResult : queryResults) {
+
+        // Printing query results
+        for (const auto &queryResult : queryResults) {
             cout << "#" << i << " - \"" << queryResult.product.id << "\" - \""
                  << queryResult.product.name << "\"" << endl;
             ++i;
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
 
         cout << "\nConsulta processada em " << queryProcessingTime << "ms.\n";
 
-        free((void *)line);
+        free((void *) line);
     }
 
     return 0;

@@ -23,6 +23,11 @@ char filterNonAlphabetic(char &letter) {
     return '-';
 }
 
+/**
+ * Add a word to internal dictionary of the Spelling Corrector
+ * @param word
+ * @author Rúben Belém
+ */
 void SpellingCorrector::addWord(const std::string &word) {
     ++dictionary[word];
 }
@@ -79,6 +84,13 @@ string SpellingCorrector::correct(const std::string &word) {
     return "";
 }
 
+/**
+ * Gets correction suggestions given a word
+ * @param word
+ * @author Rúben Belém
+ * @return An array of pair<string, int> where the string is a correction suggestion and int is a score. The array is
+ * sorted in descendant order by the score.
+ */
 vector<pair<string, int>> SpellingCorrector::getSuggestions(const std::string &word) {
     Vector result;
     Dictionary candidates;

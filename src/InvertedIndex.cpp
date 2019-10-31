@@ -14,8 +14,7 @@ void InvertedIndex::add(const string &word, int productIndexId) {
     ++this->index[word][productIndexId]; // update inverted list
 }
 
-int
-InvertedIndex::getFrequencyInProduct(const string &word, int productIndexId) {
+int InvertedIndex::getFrequencyInProduct(const string &word, int productIndexId) {
     if (hasWord(word)) {
         if (this->index[word].find(productIndexId) != this->index[word].end()) {
             return this->index[word][productIndexId];
