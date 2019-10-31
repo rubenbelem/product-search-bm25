@@ -67,7 +67,7 @@ ou
 
 As consultas podem ser feitas com mais de um termo, e com caracteres especiais (como por exemplo "Relógio Azul") que estejam de acordo com a codificação _ISO 8859-1_.
 
-O programa espera receber uma consulta na codificação _UTF-8_, a codifica em _ISO 8859-1_. Os textos dos produtos também são codificados em _ISO 8859-1_ antes de terem seus termos indexados. Ou seja, é necessário executar o programa em um terminal com codificação _UTF-8_, como o _bash_ padrão do _Ubuntu_ ou _Linux Mint_.
+O programa espera receber uma consulta na codificação _UTF-8_, a codifica em _ISO 8859-1_. Os textos dos produtos também são codificados em _ISO 8859-1_ antes de terem seus termos indexados. Ou seja, é necessário executar o programa em um terminal com codificação _UTF-8_, como o _bash_ padrão do _Ubuntu_ ou _Linux Mint_. Os caracteres especiais como "á,ç,ê" etc. são convertidos em caracteres comuns, "a,c,e" etc. Essa transformação ocorre tanto durante a indexação, nos termos a serem indexados, quanto durante o processamento de consultas, nos termos da consulta que serão processados.
 
 Além disso, o programa também suporta correção de termos da consulta para termos com tamanho de até 15 caracteres. A forma de implementação foi: caso um termo da consulta não esteja indexado, o "SpellingCorrector" calcula sugestões de correção e adiciona aquela que foi com o maior "ranking", e então o processador de consultas a adiciona na consulta, realizando um tipo de _expansão local_ [[1]](https://www.iro.umontreal.ca/~nie/IFT6255/carpineto-Survey-QE.pdf) da mesma. Assim, a consulta "relxgio pzul" traz os mesmos resultados da consulta "relógio azul", por exemplo.
 
