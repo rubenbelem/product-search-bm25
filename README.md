@@ -2,6 +2,8 @@
 
 ### Rúben Jozafá Silva Belém
 
+As instruções a seguir foram testadas nos sistemas _Ubuntu 18.04 Bionic Beaver_ e _Linux Mint 19.2 "Tina" Cinnamon_.
+
 #### Instalação de dependências
 
 Primeiramente, é necessário possuir o _Git_ instalado. É possível instalá-lo com o comando:
