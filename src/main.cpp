@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <climits>
 #include <chrono>
+#include "readline/readline.h"
+#include "readline/history.h"
 
 using namespace std;
 
@@ -20,10 +22,10 @@ int main(int argc, char *argv[]) {
     ifstream stopWordsFile;
 
     // If there isn't enough args...
-    if (argc < 3) {
+    if (argc < 4) {
         cerr
-                << "Usage: ./processor <products-file-path> "
-                   "<stopwords-file-path>";
+                << "Forma de uso: ./processador <caminho-do-arquivo-de-produtos> "
+                   "<caminho-do-arquivo-de-stopwords> <forma-de-ordenar-saida>";
         return 1;
     }
 
@@ -31,8 +33,8 @@ int main(int argc, char *argv[]) {
 
     // If it fails to open Products File
     if (productsFile.fail()) {
-        cerr << "The products file on path \"" << argv[1]
-             << "\" was not found.";
+        cerr << "O arquivo de produtos no caminho \"" << argv[1]
+             << "\" não foi encontrado.";
         return 1;
     }
 
@@ -40,29 +42,21 @@ int main(int argc, char *argv[]) {
 
     // If it fails to open Stop Words File
     if (stopWordsFile.fail()) {
-        cerr << "The stop words file on path \"" << argv[2]
-             << "\" was not found.";
+        cerr << "O arquivo de stop words no caminho \"" << argv[2]
+             << "\" não foi encontrado.";
         return 1;
     }
 
-    cout << "Welcome to Ruben's Query Processor!\n\nChoose an option below "
-            "to sort query results by product ID, or by the score value.\n\n"
-            "1) Sort by ID\n2) Sort by Score\n\n";
+    string sortOption(argv[3]);
 
-    string sortOption;
-
-    while (true) {
-        cout << "Type the number of desired sorting option here: ";
-
-        getline(cin, sortOption);
-
-        if (sortOption == "1" || sortOption == "2") break;
-        else {
-            cout << "The option you typed is invalid! Please try again.\n\n";
-        }
+    if (sortOption != "id" && sortOption != "score") {
+        cerr << "A opção de ordenação da saída escolhida é invalida. O valor deve ser \"id\" ou \"score\"";
+        return 1;
     }
 
-    cout << "\nAlright! The indexing step is starting right now.\n\n";
+    cout << "Bem-vindo(a) ao Processador de Consultas do Rúben!\n";
+
+    cout << "\nCerto! A etapa de indexação se inicia agora.\n\n";
 
     Tokenizer tokenizer(stopWordsFile);
     QueryProcessor queryProcessor(20, 15, &tokenizer);
@@ -79,26 +73,29 @@ int main(int argc, char *argv[]) {
         }
     }
     catch (std::exception &e) {
-        cerr << "\nAn error occurred in the indexing step! Query Processor is "
-                "now being shutdown.";
-        return 2;
+        cerr << "\nOcorreu um erro durante a etapa de indexação!"
+                "O Processador de Consultas está sendo interrompido agora.";
+        return 1;
     }
 
     productsFile.close();
     stopWordsFile.close();
 
-    cout << "\bThe indexing step has finished! Starting Query Processor. "
-            "\n\nYou can type \"$exit()\" (without quotes) anytime to finish "
-            "the program.\n";
+    cout << "\bA etapa de indexação terminou! Iniciando o Processador de Consultas. "
+            "\n\nVocê pode digitar \"@sair\" (sem aspas) ou pressionar Ctrl+C a qualquer momento "
+            "para terminar a execução do programa.\n";
 
-    while (true) {
-        string query;
+    const char *line;
+    while ((line = readline("> Digite aqui sua consulta: ")) != nullptr) {
+        //string query;
 
-        cout << "\n> Type your query here: ";
+        //cout << "\n> Digite aqui sua consulta: ";
 
-        std::getline(cin, query);
+        if (*line) add_history(line);
+        string query(line);
 
-        if (query == "$exit()") break;
+
+        if (query == "@sair") break;
 
         auto start = std::chrono::system_clock::now();
         auto queryResults = queryProcessor.process(query);
@@ -111,8 +108,8 @@ int main(int argc, char *argv[]) {
         }
 
         // The queryResults array already comes sorted from queryProcessor
-        // So, if the user choose sortOption 2 there's nothing to do with the
-        // aqueryResults rray.
+        // So, if the user choose sort to by "score" there's nothing left to do with the
+        // queryResults array.
         if (sortOption == "1") {
             std::sort(queryResults.begin(), queryResults.end(),
                       compareQueryResultsByID); // sorting by product ID
@@ -120,13 +117,15 @@ int main(int argc, char *argv[]) {
 
         cout << endl;
         int i = 1;
-        for (auto queryResult : queryResults) {
+        for (const auto& queryResult : queryResults) {
             cout << "#" << i << " - \"" << queryResult.product.id << "\" - \""
                  << queryResult.product.name << "\"" << endl;
             ++i;
         }
 
-        cout << "\nQuery processed in " << queryProcessingTime << "ms.\n";
+        cout << "\nConsulta processada em " << queryProcessingTime << "ms.\n";
+
+        free((void *)line);
     }
 
     return 0;
