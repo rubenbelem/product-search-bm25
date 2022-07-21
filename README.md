@@ -1,4 +1,4 @@
-## Teste Técnico - Linx
+## Product Search with BM25 ranking
 
 ### Rúben Jozafá Silva Belém
 
@@ -23,8 +23,8 @@ sudo apt install cmake make g++ libreadline-dev
 É preciso clonar este repositório com o Git, e então navegar até o diretório clonado (o diretório raíz do projeto, _<dir_raiz\>_) com os comandos:
 
 ```
-git clone https://github.com/rubenbelem/teste-tecnico-linx.git
-cd teste-tecnico-linx
+git clone https://github.com/rubenbelem/product-search-bm25.git
+cd product-search-bm25
 ```
 
 #### Compilando o programa
