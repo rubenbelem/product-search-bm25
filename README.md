@@ -47,7 +47,7 @@ cd bin
 
 O programa "_processador_" recebe três argumentos:
 
-- O primeiro é o caminho do arquivo "_catalogo_produtos.json_", que contém a lista de produtos a serem indexados pelo processador de consultas
+- O primeiro é o caminho do arquivo "_product_catalog.json_", que contém a lista de produtos a serem indexados pelo processador de consultas
 - O segundo é o caminho do arquivo "stopwords.txt", que contém uma lista de palavras comuns de uma língua, a serem ignoradas na etapa indexação.
 - O terceiro é a forma de ordenação do resultado das consultas. É possível escolher que sejam ordenados pelo ID do produto em ordem crescente, com o valor "id", ou pelo _score_ do _BM25_ em ordem decrescente (pois os resultados de maior qualidade ficam no topo), com o valor "score".
 
@@ -56,11 +56,11 @@ Há exemplares dos dois arquivos mencionados acima no diretório _\<dir_raiz\>/d
 Então, o programa "_processador_" pode ser executado com os comandos:
 
 ```
-./processador ../data/catalogo_produtos.json ../data/stopwords.txt id
+./processador ../data/product_catalog.json ../data/stopwords.txt id
 
 ou
 
-./processador ../data/catalogo_produtos.json ../data/stopwords.txt score
+./processador ../data/product_catalog.json ../data/stopwords.txt score
 ```
 
 #### Comentários sobre o programa
