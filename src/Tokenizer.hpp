@@ -2,8 +2,8 @@
 // Created by rubelem on 10/29/19.
 //
 
-#ifndef TECHNICAL_TEST_LINX_TOKENIZER_HPP
-#define TECHNICAL_TEST_LINX_TOKENIZER_HPP
+#ifndef BM25_SEARCH_TOKENIZER_HPP
+#define BM25_SEARCH_TOKENIZER_HPP
 
 #include <string>
 #include <vector>
@@ -23,4 +23,4 @@ private:
     bool isStopWord(const std::string &s);
 };
 
-#endif //TECHNICAL_TEST_LINX_TOKENIZER_HPP
+#endif //BM25_SEARCH_TOKENIZER_HPP

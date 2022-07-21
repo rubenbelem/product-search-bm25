@@ -2,8 +2,8 @@
 // Created by rubelem on 10/30/19.
 //
 
-#ifndef TECHNICAL_TEST_LINX_QUERYPROCESSOR_HPP
-#define TECHNICAL_TEST_LINX_QUERYPROCESSOR_HPP
+#ifndef BM25_SEARCH_QUERY_PROCESSOR_HPP
+#define BM25_SEARCH_QUERY_PROCESSOR_HPP
 
 #include <unordered_map>
 #include "Product.hpp"
@@ -34,4 +34,4 @@ private:
     SpellingCorrector spellingCorrector;
 };
 
-#endif //TECHNICAL_TEST_LINX_QUERYPROCESSOR_HPP
+#endif //BM25_SEARCH_QUERY_PROCESSOR_HPP
