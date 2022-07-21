@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(technical_test_linx)
+project(product_search_bm25)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
