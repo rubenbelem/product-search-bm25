@@ -23,8 +23,8 @@ int main(int argc, char *argv[]) {
 
     // If there isn't enough args...
     if (argc < 4) {
-        cerr << "Forma de uso: ./processador <caminho-do-arquivo-de-produtos> "
-                "<caminho-do-arquivo-de-stopwords> <forma-de-ordenar-saida>\n";
+        cerr << "Usage example: ./processor <product-catalog-file-path> "
+                "<stopwords-file-path> <sort-option>\n";
         return 1;
     }
 
@@ -32,8 +32,8 @@ int main(int argc, char *argv[]) {
 
     // If it fails to open Products File
     if (productsFile.fail()) {
-        cerr << "O arquivo de produtos no caminho \"" << argv[1]
-             << "\" não foi encontrado.\n";
+        cerr << "The product catalog file at the path \"" << argv[1]
+             << "\" wasn't found.\n";
         return 1;
     }
 
@@ -41,22 +41,22 @@ int main(int argc, char *argv[]) {
 
     // If it fails to open Stop Words File
     if (stopWordsFile.fail()) {
-        cerr << "O arquivo de stop words no caminho \"" << argv[2]
-             << "\" não foi encontrado.\n";
+        cerr << "The stopwords file at the path \"" << argv[2]
+             << "\" wasn't found.\n";
         return 1;
     }
 
     string sortOption(argv[3]);
-
+    
     // sort option wasn't valid
     if (sortOption != "id" && sortOption != "score") {
-        cerr << "A opção de ordenação da saída escolhida é invalida. O valor deve ser \"id\" ou \"score\"\n";
+        cerr << "The option for sorting the results is not valid. The value must be \"id\" or \"score\"\n";
         return 1;
     }
 
-    cout << "Bem-vindo(a) ao Processador de Consultas do Rúben!\n";
+    cout << "Welcome to Ruben's product query processor!\n";
 
-    cout << "\nCerto! A etapa de indexação se inicia agora.\n";
+    cout << "\nAlright, starting the indexing stage.\n";
 
     Tokenizer tokenizer(stopWordsFile);
     QueryProcessor queryProcessor(20, 15, &tokenizer);
@@ -73,25 +73,25 @@ int main(int argc, char *argv[]) {
         }
     }
     catch (std::exception &e) {
-        cerr << "\nOcorreu um erro durante a etapa de indexação!"
-                "O Processador de Consultas está sendo interrompido agora.";
+        cerr << "\nAn error ocurred during the indexing stage!"
+                "The query processor is shutting down.";
         return 1;
     }
 
     productsFile.close();
     stopWordsFile.close();
 
-    cout << "\nA etapa de indexação terminou! Iniciando o Processador de Consultas. "
-            "\n\nPara navegar no histórico de consultas realizadas, utilize as teclas de seta para cima e para baixo."
-            "\n\nVocê pode digitar \"@sair\" (sem aspas) ou pressionar Ctrl+C a qualquer momento "
-            "para terminar a execução do programa.\n\n";
+    cout << "\nThe indexing stage is finished! Starting the query processor. "
+            "\n\nTo navigate through the history of queries you must use the up and down arrow keys."
+            "\n\nYou can type \"@exit\" (no quotes) or press Ctrl+C at any moment "
+            "to finish the program execution.\n\n";
 
     const char *line;
-    while ((line = readline("> Digite aqui sua consulta: ")) != nullptr) {
+    while ((line = readline("> Type your query: ")) != nullptr) {
         if (*line) add_history(line);
         string query(line);
 
-        if (query == "@sair") break;
+        if (query == "@exit") break;
 
         // Query processing
         auto start = std::chrono::system_clock::now();
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
         auto queryProcessingTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         if (queryResults.empty()) {
-            cout << "\nNenhum resultado encontrado.\n";
+            cout << "\nNo result was found.\n";
             
         }
         else {
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        cout << "\nConsulta processada em " << queryProcessingTime << "ms.\n\n";
+        cout << "\nQuery processed in " << queryProcessingTime << "ms.\n\n";
 
         free((void *) line);
     }
