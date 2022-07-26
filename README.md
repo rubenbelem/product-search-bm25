@@ -36,7 +36,7 @@ cmake -Bbuild -H. && make -C build
 
 After that, a directory _bin/_ is created inside the root directory with the executable `processor` inside it.
 
-#### Program executin
+#### Program execution
 
 While still in the root directory, go to _bin_:
 
