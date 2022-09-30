@@ -70,13 +70,12 @@ The queries can have multiple terms and  _ISO 8859-1_ encoding characters (like 
 
 The program hopes to receive a query with _UTF-8_ encoding, which is then encoded with _ISO 8859-1_. The text of the products are also encoded with _ISO 8859-1_ before the indexing stage. That said, one must run the program in a terminal with _UTF-8_ encoding, like _Ubuntu_ standard _bash_ for example. The special characters like "á,ç,ê" are transformed to common characters ("a,c,e"). This transformation is performed in the indexing stage, at the indexed product terms, as well as in the query processing, at the query terms.
 
-Besides that, the program also supports query spelling correction for terms with at most 15 characters. If a query term is not indexed, then the "SpellingCorrector" calculates suggestions of correction and adds the one with the highest "ranking". Then, the query processor add this corrected term in the original query, performing a *local query expansion* [[1]](https://www.iro.umontreal.ca/~nie/IFT6255/carpineto-Survey-QE.pdf). That said, the query "blue watcx" brings the same results as "blue watch", for example.
+Besides that, the program also supports query spelling correction for terms with at most 15 characters. If a query term is not indexed, then the "SpellingCorrector" calculates suggestions of correction and adds the one with the highest "ranking". Then, the query processor add this corrected term in the original query, performing a local query expansion[^queryexpansion]. That said, the query "blue watcx" brings the same results as "blue watch", for example.
 
-The spelling correction method is the Peter Norvig Algorithm [[2]](https://norvig.com/spell-correct.html), written originally in Python. It is a brute force approach to spelling correction. I used a version written in C++ from the repository https://github.com/felipefarinon/spellingcorrector, which Peter Norvig quoted in the page where he describes the algorithm.
+The spelling correction method is the Peter Norvig Algorithm[^norvig2007], written originally in Python. It is a brute force approach to spelling correction. I used a version written in C++ from the repository https://github.com/felipefarinon/spellingcorrector, which Peter Norvig quoted in the page where he describes the algorithm.
 
 #### References
 
-[1]. <a name="ref1"> [C. Carpineto and G. Romano. "A survey of automatic query expansion in information retrieval". ACM Computing Surveys, 44(1):1-50, Jan. 2012](https://www.iro.umontreal.ca/~nie/IFT6255/carpineto-Survey-QE.pdf).
-</a>
+[^queryexpansion]: <a name="ref1"> [C. Carpineto and G. Romano. "A survey of automatic query expansion in information retrieval". ACM Computing Surveys, 44(1):1-50, Jan. 2012](https://www.iro.umontreal.ca/~nie/IFT6255/carpineto-Survey-QE.pdf).
 
-[2]. ["How to Write a Spelling Corrector", Peter Norvig, Fev. 2007](https://norvig.com/spell-correct.html)
+[^norvig2007]: ["How to Write a Spelling Corrector", Peter Norvig, Fev. 2007](https://norvig.com/spell-correct.html)
