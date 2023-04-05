@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  processor:
+    build: .
+    volumes:
+      - ${HOST_DATA_PATH}:${CONTAINER_DATA_PATH}
+    command: ["/app/bin/processor", "$PRODUCT_CATALOG_PATH", "$STOPWORDS_PATH", "$SORT_BY"]
+    env_file:
+      - .env
