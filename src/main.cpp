@@ -46,10 +46,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    string sortOption(argv[3]);
+    string sortBy(argv[3]);
     
     // sort option wasn't valid
-    if (sortOption != "id" && sortOption != "score") {
+    if (sortBy != "id" && sortBy != "score") {
         cerr << "The option for sorting the results is not valid. The value must be \"id\" or \"score\"\n";
         return 1;
     }
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 
     cout << "\nThe indexing stage is finished! Starting the query processor. "
             "\n\nTo navigate through the history of queries you must use the up and down arrow keys."
-            "\n\nYou can type \"@exit\" (no quotes) or press Ctrl+C at any moment "
+            "\n\nYou can type \"@exit\" (no quotes) or press Ctrl+D at any moment "
             "to finish the program execution.\n\n";
 
     const char *line;
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
             // The queryResults array already comes sorted from queryProcessor
             // So, if the user choose sort to by "score" there's nothing left to do with the
             // queryResults array.
-            if (sortOption == "id") {
+            if (sortBy == "id") {
                 std::sort(queryResults.begin(), queryResults.end(),
                         compareQueryResultsByID); // sorting by product ID
             }
