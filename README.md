@@ -62,6 +62,23 @@ ou
 ./processor ../data/product_catalog.json ../data/stopwords.txt score
 ```
 
+#### Execution with docker-compose
+
+You must have `docker` and `docker-compose` installed for this execution approach.
+
+First, build the query processor with:
+
+```bash
+make build-docker
+```
+
+The approach for running the query processor inside a docker container uses the environment variables defined in `.docker.env` file. You must set the `HOST_DATA_PATH` variable with the path to the directory that have the product catalog and stopwords file, and set their names at `PRODUCT_CATALOG_PATH` and `STOPWORDS_PATH` file.
+
+Then, just run the command:
+```bash
+make run-in-docker
+```
+
 #### Comments on the program
 
 The submited queries are stored in a queries history. One can navigate through the history using the keyboard <Up> and <Down> keys.
